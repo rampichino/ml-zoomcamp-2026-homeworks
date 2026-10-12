@@ -13,7 +13,11 @@ Each module has its own folder with `notes/` (lecture notes) and `solutions/` (h
 
 ## Running the notebooks
 
+Dependencies are managed with [uv](https://docs.astral.sh/uv/):
+
 ```bash
-pip install jupyter numpy pandas matplotlib seaborn scikit-learn
-jupyter notebook
+uv sync
+uv run jupyter notebook
 ```
+
+In VS Code, select `.venv/bin/python` as the notebook kernel.
