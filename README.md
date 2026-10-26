@@ -12,6 +12,7 @@ Each module has its own folder with `notes/` (lecture notes) and `solutions/` (h
 | 02 | Machine Learning for Regression | [notes](02-regression/notes/ML_Zoomcamp_02_Regression_Notes.pdf) | [homework.ipynb](02-regression/solutions/homework.ipynb) |
 | 03 | Machine Learning for Classification | [notes](03-classification/notes/ML_Zoomcamp_03_Classification_Notes.pdf) | [homework.ipynb](03-classification/solutions/homework.ipynb) |
 | 04 | Evaluation Metrics for Classification | [notes](04-evaluation/notes/ML_Zoomcamp_04_Evaluation_Notes.pdf) | [homework.ipynb](04-evaluation/solutions/homework.ipynb) |
+| 05 | Deploying Machine Learning Models | [notes](05-deployment/notes/ML_Zoomcamp_05_Deployment_Notes.pdf) | [homework.ipynb](05-deployment/solutions/homework.ipynb) |
 
 ## Running the notebooks
 

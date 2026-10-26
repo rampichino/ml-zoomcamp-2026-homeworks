@@ -1,0 +1,804 @@
+{
+  "messages": [
+    {
+      "id": "764410af-46e9-4f73-a9b7-45977e0fda4f",
+      "body": "/bin/bash: line 1: docker: command not found\n",
+      "time": 1793035251.4641547,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "ee140658-6c6e-4a19-920d-b85085fc8801",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "08cadacb-e12d-496c-974a-84cf031f787e",
+      "time": 1793035256.9235213,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01FRqsnX74HF9L7vNhtDVno9",
+            "title": "ls 05-deployment; which podman docker.io 2>/dev/null; cat os-release | head -3; groups",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "ls /home/alfredo/repo/ml-zoomcamp-2026-homeworks/05-deployment; which podman docker.io 2>/dev/null; cat /etc/os-release | head -3; groups",
+              "description": "Check deployment folder, container tools, and OS"
+            },
+            "raw_output": "notes/\nsolutions/\nPRETTY_NAME=\"Debian GNU/Linux forky/sid\"\nNAME=\"Debian GNU/Linux\"\nVERSION_CODENAME=forky\nalfredo cdrom floppy audio dip video plugdev users netdev scanner bluetooth lpadmin kvm"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Docker isn't installed on this machine. There's no Podman either, and your user isn't in a `docker` group. You're on Debian sid (forky), and Docker's official apt repo doesn't support sid well, so Debian's own package is the simplest route:\n\n```bash\nsudo apt update\nsudo apt install docker.io docker-buildx docker-compose\nsudo systemctl enable --now docker\nsudo usermod -aG docker $USER   # lets you run docker without sudo\n```\n\nThen log out and back in, or run `newgrp docker` in your current shell, so the group change applies. Check it works with:\n\n```bash\ndocker run --rm hello-world\n```\n\nI haven't run any of this myself because it needs `sudo` and changes your system. You can run it in your terminal, or type `! <command>` here.\n\nOne caution: adding yourself to the `docker` group effectively gives you root access. That's the usual setup on a personal dev machine. If you'd rather avoid it, skip the `usermod` line and use `sudo docker ...` instead.\n\nOnce Docker is working, tell me which part of the 05-deployment homework you're on and I can help with the Dockerfile or the commands.",
+      "id": "209191ea-f1c2-4490-b608-9c8f62b1f8ad",
+      "time": 1793035264.5162945,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "id": "a9d835c5-ce58-4348-82cd-2278b1d873af",
+      "body": "I can solve without the nedd to install docker?",
+      "time": 1793035436.6083035,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "ee140658-6c6e-4a19-920d-b85085fc8801",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "556e9295-39bc-4301-b49a-156e7df53f10",
+      "time": 1793035440.244852,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01G2BiR724qR4gaJc2jFzi15",
+            "title": "cd 05-deployment; find . -type f | head -50; ls ../04-evaluation ../04-evaluation/* | head -30",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "cd /home/alfredo/repo/ml-zoomcamp-2026-homeworks/05-deployment; find . -type f | head -50; ls ../04-evaluation ../04-evaluation/* | head -30",
+              "description": "List homework 05 files and previous homework layout"
+            },
+            "raw_output": "./notes/ML_Zoomcamp_05_Deployment_Notes.pdf\n./solutions/pipeline.bin\n./solutions/feature_defaults.json\n./solutions/q6_test.py\n./solutions/model.py\n./solutions/homework.ipynb\n./solutions/.python-version\n./solutions/predict.py\n./solutions/uv.lock\n./solutions/pyproject.toml\n./solutions/model_metadata.json\n./solutions/q3_load_model.py\n./solutions/smoke_test.py\n./solutions/Dockerfile\n./solutions/.venv/pyvenv.cfg\n./solutions/.venv/.lock\n./solutions/.venv/CACHEDIR.TAG\n./solutions/.venv/.gitignore\n./solutions/__pycache__/model.cpython-311.pyc\n./solutions/__pycache__/predict.cpython-311.pyc\n./solutions/.ipynb_checkpoints/homework-checkpoint.ipynb\n./solutions/.venv/bin/deactivate.bat\n./solutions/.venv/bin/idna\n./solutions/.venv/bin/uvicorn\n./solutions/.venv/bin/activate.csh\n./solutions/.venv/bin/activate_this.py\n./solutions/.venv/bin/numpy-config\n./solutions/.venv/bin/activate.fish\n./solutions/.venv/bin/activate.xsh\n./solutions/.venv/bin/f2py\n./solutions/.venv/bin/fastapi\n./solutions/.venv/bin/activate.nu\n./solutions/.venv/bin/activate.ps1\n./solutions/.venv/bin/pydoc.bat\n./solutions/.venv/bin/activate.bat\n./solutions/.venv/bin/activate\n./solutions/.venv/lib/python3.11/site-packages/_virtualenv.pth\n./solutions/.venv/lib/python3.11/site-packages/threadpoolctl.py\n./solutions/.venv/lib/python3.11/site-packages/typing_extensions.py\n./solutions/.venv/lib/python3.11/site-packages/_virtualenv.py\n./solutions/.venv/lib/python3.11/site-packages/idna/package_data.py\n./solutions/.venv/lib/python3.11/site-packages/idna/cli.py\n./solutions/.venv/lib/python3.11/site-packages/idna/__init__.py\n./solutions/.venv/lib/python3.11/site-packages/idna/__main__.py\n./solutions/.venv/lib/python3.11/site-packages/idna/uts46data.py\n./solutions/.venv/lib/python3.11/site-packages/idna/idnadata.py\n./solutions/.venv/lib/python3.11/site-packages/idna/compat.py\n./solutions/.venv/lib/python3.11/site-packages/idna/py.typed\n./solutions/.venv/lib/python3.11/site-packages/idna/intranges.py\n./solutions/.venv/lib/python3.11/site-packages/idna/core.py\n../04-evaluation:\nnotes\nsolutions\n\n../04-evaluation/notes:\nML_Zoomcamp_04_Evaluation_Notes.pdf\n\n../04-evaluation/solutions:\ncourse_lead_scoring_2026.csv\nhomework.ipynb"
+          },
+          {
+            "tool_call_id": "toolu_01VuWK74W5ZqdBrYq6XkwuiZ",
+            "title": "cd solutions; cat Dockerfile q6_test.py predict.py q3_load_model.py; python3 -c \" import json;nb=json.load(open('homework.ipynb')) for c in nb['cells']: if c['cell_type']=='markdown': print(''.join(c['source'])[:600]); print('---') \"",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "cd solutions; cat Dockerfile q6_test.py predict.py q3_load_model.py; python3 -c \"\nimport json;nb=json.load(open('homework.ipynb'))\nfor c in nb['cells']:\n  if c['cell_type']=='markdown': print(''.join(c['source'])[:600]); print('---')\n\"",
+              "description": "Show Dockerfile, scripts, and notebook question text"
+            },
+            "raw_output": "FROM python:3.11.15-slim-bookworm@sha256:d29f48a31a8b408ed19272ca1e7b10ebae13b240a27e862d3d4217c528e2e0c3\n\nCOPY --from=ghcr.io/astral-sh/uv:0.10.11@sha256:3472e43b4e738cf911c99d41bb34331280efad54c73b1def654a6227bb59b2b4 /uv /uvx /bin/\n\nENV PATH=\"/code/.venv/bin:$PATH\" \\\n    UV_COMPILE_BYTECODE=1 \\\n    UV_LINK_MODE=copy\n\nWORKDIR /code\nCOPY pyproject.toml uv.lock .python-version ./\nRUN uv sync --locked --no-dev\n\nCOPY model.py predict.py feature_defaults.json model_metadata.json pipeline.bin q6_test.py ./\n\nEXPOSE 9696\nENTRYPOINT [\"uvicorn\", \"predict:app\", \"--host\", \"0.0.0.0\", \"--port\", \"9696\"]\nfrom __future__ import annotations\n\nimport json\nimport sys\nfrom urllib.request import Request, urlopen\n\n\nurl = sys.argv[1] if len(sys.argv) > 1 else \"http://localhost:9696/predict\"\nclient = {\n    \"lead_source\": \"organic_search\",\n    \"industry\": \"technology\",\n    \"employment_status\": \"employed\",\n    \"location\": \"europe\",\n    \"number_of_courses_viewed\": 4,\n    \"annual_income\": 80304.0,\n    \"interaction_count\": 7,\n    \"lead_score\": 0.74,\n}\nrequest = Request(\n    url,\n    data=json.dumps(client).encode(\"utf-8\"),\n    headers={\"Content-Type\": \"application/json\"},\n    method=\"POST\",\n)\n\nwith urlopen(request) as response:\n    result = json.load(response)\n\nassert set(result) == {\"conversion_probability\", \"conversion\"}\nassert 0 <= result[\"conversion_probability\"] <= 1\nassert isinstance(result[\"conversion\"], bool)\nprint(result)\nfrom __future__ import annotations\n\nimport hashlib\nimport os\nimport pickle\nfrom pathlib import Path\nfrom typing import Any\n\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel\n\nfrom model import DEFAULTS_PATH, normalize_record\n\n\nMODEL_PATH = Path(os.getenv(\"MODEL_PATH\", Path(__file__).with_name(\"pipeline.bin\")))\nwith MODEL_PATH.open(\"rb\") as model_file:\n    pipeline = pickle.load(model_file)\nMODEL_SHA256 = hashlib.sha256(MODEL_PATH.read_bytes()).hexdigest()\nFEATURE_DEFAULTS_SHA256 = hashlib.sha256(DEFAULTS_PATH.read_bytes()).hexdigest()\n\napp = FastAPI(title=\"ML Zoomcamp 2026 lead scoring\")\n\n\nclass Lead(BaseModel):\n    lead_source: str | None = None\n    industry: str | None = None\n    employment_status: str | None = None\n    location: str | None = None\n    number_of_courses_viewed: int | None = None\n    annual_income: float | None = None\n    interaction_count: int | None = None\n    lead_score: float | None = None\n\n\n@app.get(\"/health\")\ndef health() -> dict[str, Any]:\n    return {\n        \"status\": \"ok\",\n        \"model_sha256\": MODEL_SHA256,\n        \"feature_defaults_sha256\": FEATURE_DEFAULTS_SHA256,\n    }\n\n\n@app.post(\"/predict\")\ndef predict(lead: Lead) -> dict[str, Any]:\n    record = normalize_record(lead.model_dump())\n    probability = float(pipeline.predict_proba([record])[0, 1])\n    return {\n        \"conversion_probability\": round(probability, 6),\n        \"conversion\": probability >= 0.5,\n    }\nimport pickle\n\nfrom model import normalize_record\n\nlead = {\n    \"lead_source\": \"paid_ads\",\n    \"industry\": \"technology\",\n    \"employment_status\": \"employed\",\n    \"location\": \"north_america\",\n    \"number_of_courses_viewed\": 2,\n    \"annual_income\": 79276.0,\n    \"interaction_count\": 4,\n    \"lead_score\": 0.41,\n}\n\nwith open(\"pipeline.bin\", \"rb\") as f_in:\n    pipeline = pickle.load(f_in)\n\nprobability = pipeline.predict_proba([normalize_record(lead)])[0, 1]\nprint(round(float(probability), 3))\n# ML Zoomcamp 2026 \u2014 Homework 5: Deployment\n\n---\nCheck the artifact checksum before unpickling it.\n---\n## Q1. uv version\n---\n## Q2. Locked Scikit-Learn version\n---\n## Q3. Load the model with pickle\n---\n## Q4. Serve the model with FastAPI\nStart `predict:app` with uvicorn in the background, then POST the second lead.\n---\n## Q5. Python base image\nThe tag declared in the checked-in `Dockerfile`:\n---\n## Q6. Run the container\n\nBuild the image and run it in the background, then send the same request as Q4.\nIt serves the same frozen artifact, so the answer must match Q4.\n---",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for python3 -c ' * commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Yes, you can answer the whole homework without installing Docker. Only Q6 actually uses it, and for that one you can get the answer but not test the container itself.\n\n| Question | Needs Docker? | How to answer it |\n|---|---|---|\n| Q1: uv version | No | `uv --version` |\n| Q2: Locked scikit-learn version | No | Look up `scikit-learn` in `uv.lock` |\n| Q3: Load the model with pickle | No | `uv run python q3_load_model.py` |\n| Q4: Serve with FastAPI | No | `uv run uvicorn predict:app --port 9696`, then POST the lead |\n| Q5: Python base image | No | Read it from the `FROM` line in `Dockerfile`: `python:3.11.15-slim-bookworm` |\n| Q6: Run the container | Yes, to really do it | See below |\n\n**Q6:** your notebook says the container \"serves the same frozen artifact, so the answer must match Q4.\" The image runs the same `pipeline.bin` with the same `predict.py`, so the prediction is the same as Q4's. You can also run the Q6 client against your local server:\n\n```bash\nuv run uvicorn predict:app --port 9696 &\nuv run python q6_test.py http://localhost:9696/predict\n```\n\nThat shows what the container would return, but it doesn't prove the `Dockerfile` builds and runs. If you want to check that without installing anything, you could run it in GitHub Codespaces, which has Docker already installed.",
+      "id": "a071cd0f-4391-446a-98de-0921020f32f6",
+      "time": 1793035454.1096952,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "id": "0dcff30f-ad56-4991-9320-3ab7f7bd5c53",
+      "body": "ERROR: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head \"http://%2Fvar%2Frun%2Fdocker.sock/_ping\": dial unix /var/run/docker.sock: connect: permission denied\ndocker: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head \"http://%2Fvar%2Frun%2Fdocker.sock/_ping\": dial unix /var/run/docker.sock: connect: permission denied",
+      "time": 1793035990.5417213,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "aaa67a7a-8764-460c-8cb9-a118c9b70b21",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "d7fd33aa-964d-4739-af02-32a795d2b173",
+      "time": 1793035998.1345587,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01NKQXNqfvr4AJLNF9ZyBS11",
+            "title": "id; getent group docker; ls -l docker.sock; systemctl is-active docker",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "id; getent group docker; ls -l /var/run/docker.sock; systemctl is-active docker",
+              "description": "Check docker group membership and socket permissions"
+            },
+            "raw_output": "uid=1000(alfredo) gid=1000(alfredo) groups=1000(alfredo),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),100(users),101(netdev),102(scanner),105(bluetooth),107(lpadmin),994(kvm)\ndocker:x:982:root\n660  /var/run/docker.sock  0B\nactive",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for getent group * and systemctl is-active * commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Docker is now installed and the daemon is running. The error is a permissions problem: the Docker socket can only be used by the `docker` group, and your user isn't in it yet (the group currently lists only `root`).\n\nAdd yourself to the group:\n\n```bash\nsudo usermod -aG docker $USER\n```\n\nThe change only applies to new login sessions, so either log out and back in, or apply it to your current terminal with:\n\n```bash\nnewgrp docker\n```\n\nThen check it works:\n\n```bash\ndocker run --rm hello-world\n```\n\nSame caution as before: being in the `docker` group effectively gives you root access. If you'd rather not, skip the group change and run everything as `sudo docker ...`.\n\nOnce that works, this answers Q6 (run from `05-deployment/solutions`):\n\n```bash\ndocker build -t hw5 .\ndocker run -d --rm -p 9696:9696 --name hw5 hw5\nuv run python q6_test.py\ndocker stop hw5\n```\n\nIf your local uvicorn from Q4 is still running on port 9696, stop it first or the `docker run` will fail because the port is taken.",
+      "id": "e041dc28-3abf-49b2-9028-880144e1b420",
+      "time": 1793036006.0238767,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "id": "2bb82364-9638-4adf-9a98-5a9649da7821",
+      "body": "\\ docker run --rm hello-world\ndocker: permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Head \"http://%2Fvar%2Frun%2Fdocker.sock/_ping\": dial unix /var/run/docker.sock: connect: permission denied\n\nRun 'docker run --help' for more information\n",
+      "time": 1793036243.6426857,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "a6c51f3d-e0d2-4e32-bba0-86110eacf269",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "73d39ede-10c8-4015-a0e2-ff102ce3270a",
+      "time": 1793036246.6295726,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01KDPwoCPCABkdtQnBr1ybuF",
+            "title": "id -nG; getent group docker",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "id -nG; getent group docker",
+              "description": "Check current groups and docker group members"
+            },
+            "raw_output": "alfredo cdrom floppy audio dip video plugdev users netdev scanner bluetooth lpadmin kvm\ndocker:x:982:root"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Your user still hasn't been added to the `docker` group. Its only member is `root`. That usually means `usermod` ran with `$USER` set to `root`, which happens if you ran it inside a root shell (`sudo su` or `sudo -i`), so root got added instead of you.\n\nRun it from your normal terminal (not a root shell) with your username written out:\n\n```bash\nsudo usermod -aG docker alfredo\ngetent group docker      # should now show: docker:x:982:root,alfredo\n```\n\nThen apply the change. Opening a new terminal tab won't do it; you need either:\n\n```bash\nnewgrp docker            # applies to this terminal only\n```\n\nor a full log out and back in, which applies everywhere, including the terminal Claude Code runs in.\n\nThen check:\n\n```bash\ndocker run --rm hello-world\n```\n\nIf you just want to get Q6 done now, `sudo docker run --rm hello-world` (and `sudo docker build ...` etc.) works without any group change.",
+      "id": "501e44a7-8bf1-4dfd-96fd-1a89ba48a686",
+      "time": 1793036253.124188,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "id": "e2b59657-ae89-4fe6-812f-a602da581931",
+      "body": "!docker build -q -t zoomcamp-model:2026-hw5 .\n!docker run -d --rm --name hw5 -p 9696:9696 zoomcamp-model:2026-hw5\n\nhow long it will take?",
+      "time": 1793036526.110786,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "9e76f370-44f0-4274-af47-08cb4754f915",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "18c682bb-80fa-41f5-86d1-b78c72b3c9a3",
+      "time": 1793036530.9547722,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01Hu5ueeGVJ82XTocwWHixxQ",
+            "title": "cd solutions; ls -a | grep -i dockerignore; du -sh .venv .",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "cd /home/alfredo/repo/ml-zoomcamp-2026-homeworks/05-deployment/solutions; ls -a | grep -i dockerignore; du -sh .venv .",
+              "description": "Check for .dockerignore and build context size"
+            },
+            "raw_output": "244M\t.venv\n120K\t.",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for rtk du * commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Roughly 1\u20133 minutes the first time, depending on your internet speed. After that it's much faster.\n\n- **`docker build`, first run:** it downloads the `python:3.11-slim` base image and the `uv` image (about 60 MB together), then `uv sync` installs FastAPI, scikit-learn, NumPy and SciPy (about 100 MB or more). Most of the time goes to those downloads.\n- **`docker build`, later runs:** a few seconds, because the layers are cached. Changing your `.py` files doesn't trigger a reinstall; only changes to `pyproject.toml` or `uv.lock` do.\n- **`docker run -d`:** about one second. It prints the container ID and returns, and the server is ready a second or two later.\n\nTwo things to watch for:\n\n1. **`-q` hides all progress**, so the cell will look frozen until it finishes. If you want to see what's happening, drop `-q`.\n2. **There's no `.dockerignore`**, so Docker sends your 244 MB `.venv` to the daemon as build context every time, even though the Dockerfile never copies it. Creating a `.dockerignore` next to the Dockerfile skips that:\n   ```\n   .venv\n   __pycache__\n   .ipynb_checkpoints\n   ```\n\nAlso, since you're running these from Jupyter with `!`: if the Jupyter server was started before you were added to the `docker` group, the kernel will still get the same `permission denied` error. If that happens, restart Jupyter from a shell where `docker run hello-world` works.\n\nWhen the container is up, check it with `!uv run python q6_test.py` and stop it with `!docker stop hw5`.",
+      "id": "86de4a53-48cb-436d-8cd5-8ce822c02e26",
+      "time": 1793036541.9019535,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "id": "7efcb88c-fdbd-4078-87ff-43b56dc0bbab",
+      "body": "NameError: name 'expected' is not defined\n",
+      "time": 1793039654.3134108,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "9ce1feab-aa2a-49fe-bbf8-d4634205207d",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "e13dc82a-54e4-4be8-bfd0-249651cb3910",
+      "time": 1793039659.491853,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01LuBiffTZm3c7XJtFDck55Z",
+            "title": "cd solutions; python3 -c \" import json;nb=json.load(open('homework.ipynb')) for i,c in enumerate(nb['cells']): s=''.join(c['source']) print(f'== [{i}] {c[\\\"cell_type\\\"]} exec={c.get(\\\"execution_count\\\")}'); print(s) for o in c.get('outputs',[]): if o.get('output_type')=='error': print('ERROR:',o['ename'],o['evalue']) \"",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "cd /home/alfredo/repo/ml-zoomcamp-2026-homeworks/05-deployment/solutions; python3 -c \"\nimport json;nb=json.load(open('homework.ipynb'))\nfor i,c in enumerate(nb['cells']):\n  s=''.join(c['source'])\n  print(f'== [{i}] {c[\\\"cell_type\\\"]} exec={c.get(\\\"execution_count\\\")}'); print(s)\n  for o in c.get('outputs',[]):\n    if o.get('output_type')=='error': print('ERROR:',o['ename'],o['evalue'])\n\"",
+              "description": "Print notebook cells and any recorded errors"
+            },
+            "raw_output": "== [0] markdown exec=None\n# ML Zoomcamp 2026 \u2014 Homework 5: Deployment\n\n== [1] code exec=1\nimport hashlib\nimport json\nimport os\nimport subprocess\nimport time\nfrom urllib.request import Request, urlopen\n\n# use this folder's uv project, not the repo-level .venv\nos.environ.pop('VIRTUAL_ENV', None)\n\n!uv sync --locked -q\n!uv run python smoke_test.py\n== [2] markdown exec=None\n## Q1. uv version\n== [3] code exec=2\n!uv --version\n== [4] markdown exec=None\n## Q2. Locked Scikit-Learn version\n== [5] code exec=3\n!grep scikit-learn pyproject.toml\n!grep -A1 '^name = \"scikit-learn\"' uv.lock\n== [6] markdown exec=None\n## Q3. Load the model with pickle\n== [7] code exec=4\n%%writefile q3_load_model.py\nimport pickle\n\nfrom model import normalize_record\n\nlead = {\n    \"lead_source\": \"paid_ads\",\n    \"industry\": \"technology\",\n    \"employment_status\": \"employed\",\n    \"location\": \"north_america\",\n    \"number_of_courses_viewed\": 2,\n    \"annual_income\": 79276.0,\n    \"interaction_count\": 4,\n    \"lead_score\": 0.41,\n}\n\nwith open(\"pipeline.bin\", \"rb\") as f_in:\n    pipeline = pickle.load(f_in)\n\nprobability = pipeline.predict_proba([normalize_record(lead)])[0, 1]\nprint(round(float(probability), 3))\n== [8] code exec=5\n!uv run python q3_load_model.py\n== [9] markdown exec=None\n## Q4. Serve the model with FastAPI\nStart `predict:app` with uvicorn in the background, then POST the second lead.\n== [10] code exec=6\nURL = 'http://localhost:9696'\nclient = {\n    'lead_source': 'organic_search',\n    'industry': 'technology',\n    'employment_status': 'employed',\n    'location': 'europe',\n    'number_of_courses_viewed': 4,\n    'annual_income': 80304.0,\n    'interaction_count': 7,\n    'lead_score': 0.74,\n}\n\ndef wait_for_health(url, timeout=60):\n    deadline = time.time() + timeout\n    while time.time() < deadline:\n        try:\n            with urlopen(f'{url}/health') as response:\n                return json.load(response)\n        except OSError:\n            time.sleep(0.5)\n    raise TimeoutError(f'{url} did not become healthy')\n\ndef predict(url, lead):\n    request = Request(f'{url}/predict', data=json.dumps(lead).encode(),\n                      headers={'Content-Type': 'application/json'}, method='POST')\n    with urlopen(request) as response:\n        return json.load(response)\n== [11] code exec=7\nserver = subprocess.Popen(['uv', 'run', 'uvicorn', 'predict:app', '--host', '0.0.0.0', '--port', '9696'],\n                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\ntry:\n    print(wait_for_health(URL))\n    result = predict(URL, client)\nfinally:\n    server.terminate()\n    server.wait()\n\nresult, round(result['conversion_probability'], 3)\n== [12] markdown exec=None\n## Q5. Python base image\nThe tag declared in the checked-in `Dockerfile`:\n== [13] code exec=8\n!head -1 Dockerfile\n== [14] markdown exec=None\n## Q6. Run the container\n\nBuild the image and run it in the background, then send the same request as Q4.\nIt serves the same frozen artifact, so the answer must match Q4.\n== [15] code exec=9\n!docker build -q -t zoomcamp-model:2026-hw5 .\n!docker run -d --rm --name hw5 -p 9696:9696 zoomcamp-model:2026-hw5\n== [16] code exec=10\ntry:\n    health = wait_for_health(URL)\n    assert health['status'] == 'ok' and health['model_sha256'] == expected\n    print(health)\n    result = predict(URL, client)\nfinally:\n    subprocess.run(['docker', 'stop', 'hw5'], capture_output=True)\n\nresult, round(result['conversion_probability'], 3)\nERROR: NameError name 'expected' is not defined\n== [17] code exec=None",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for python3 -c ' * commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          },
+          {
+            "tool_call_id": "toolu_01F5wK86w37tShKLqS2gci83",
+            "title": "cd solutions; cat model_metadata.json; sha256sum pipeline.bin; git -C .. log --oneline -1 -- . 2>/dev/null",
+            "kind": "execute",
+            "status": "completed",
+            "raw_input": {
+              "command": "cd /home/alfredo/repo/ml-zoomcamp-2026-homeworks/05-deployment/solutions; cat model_metadata.json; sha256sum pipeline.bin; git -C .. log --oneline -1 -- . 2>/dev/null",
+              "description": "Show model metadata and actual pipeline checksum"
+            },
+            "raw_output": "{\n  \"dataset\": \"course_lead_scoring_2026.csv\",\n  \"dataset_sha256\": \"2d9da196bdefd2a45aa0a17ca21c19f06a5d9d56af628be1f04bbb3531cc12e9\",\n  \"rows\": 5000,\n  \"features\": [\n    \"lead_source\",\n    \"industry\",\n    \"employment_status\",\n    \"location\",\n    \"number_of_courses_viewed\",\n    \"annual_income\",\n    \"interaction_count\",\n    \"lead_score\"\n  ],\n  \"target\": \"converted\",\n  \"model\": \"DictVectorizer + LogisticRegression(solver=liblinear, C=1.0)\",\n  \"random_state\": 42,\n  \"scikit_learn\": \"1.7.2\",\n  \"numeric_imputation\": \"training-set median\",\n  \"numeric_defaults\": {\n    \"number_of_courses_viewed\": 2.0,\n    \"annual_income\": 55051.0,\n    \"interaction_count\": 4.0,\n    \"lead_score\": 0.49\n  },\n  \"model_sha256\": \"1646bbdcd38d4f044da6b630c5b332c93a314245a8c21929011c42de51f629f1\",\n  \"feature_defaults_sha256\": \"1694f842b908fac9f53c0cc19be6d91f934befc63af23cc32fefafde69acd0cd\"\n}\n1646bbdcd38d4f044da6b630c5b332c93a314245a8c21929011c42de51f629f1  pipeline.bin"
+          },
+          {
+            "tool_call_id": "toolu_01KdrtDGqAWMn9ZBEYsS4nJN",
+            "title": "ToolSearch",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "query": "select:mcp__Jupyter_MCP_Server__insert_cell,mcp__Jupyter_MCP_Server__open_file,mcp__Jupyter_MCP_Server__get_active_notebook",
+              "max_results": 3
+            },
+            "raw_output": [
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__insert_cell"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__open_file"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__get_active_notebook"
+              }
+            ]
+          },
+          {
+            "tool_call_id": "toolu_0147dpok154ZSVvNBHMCJwvf",
+            "title": "mcp__Jupyter_MCP_Server__get_active_notebook",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {},
+            "raw_output": "{\"result\":\"05-deployment/solutions/homework.ipynb\"}",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for Get Active Notebook commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          },
+          {
+            "tool_call_id": "toolu_01XzNymHKbYoVX2uT3tHgpX5",
+            "title": "mcp__Jupyter_MCP_Server__insert_cell",
+            "kind": "other",
+            "status": "in_progress",
+            "raw_input": {
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "cell_type": "markdown",
+              "content": "Check the artifact checksum before unpickling it.",
+              "insert_index": 2
+            },
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for Insert Cell commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "pending",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          },
+          {
+            "tool_call_id": "toolu_01KVFFN3UdDEkM8FguJTDPCg",
+            "title": "mcp__Jupyter_MCP_Server__insert_cell",
+            "kind": "other",
+            "status": "in_progress",
+            "raw_input": {
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "cell_type": "code",
+              "content": "with open('model_metadata.json') as f_in:\n    expected = json.load(f_in)['model_sha256']\n\nwith open('pipeline.bin', 'rb') as f_in:\n    actual = hashlib.sha256(f_in.read()).hexdigest()\n\nassert actual == expected, f'pipeline.bin checksum mismatch: {actual}'\nexpected",
+              "insert_index": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "body": "An error occurred while processing your message.\n\n<details class=\"jp-jai-error-details\">\n<summary>Error details (ConnectionError: Connection closed)</summary>\n<pre class=\"jp-jai-error-traceback\">Traceback (most recent call last):\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/jupyter_ai_persona_manager/base_persona.py&quot;, line 314, in on_message\n    await self.process_message(message)\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/jupyter_ai_acp_client/acp_personas/claude.py&quot;, line 72, in process_message\n    await super().process_message(message)\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/jupyter_ai_acp_client/telemetry.py&quot;, line 99, in wrapper\n    result = await method(self, *args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/jupyter_ai_acp_client/base_acp_persona.py&quot;, line 626, in process_message\n    await client.prompt_and_reply(\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/jupyter_ai_acp_client/default_acp_client.py&quot;, line 321, in prompt_and_reply\n    response = await conn.prompt(\n               ^^^^^^^^^^^^^^^^^^\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/acp/client/connection.py&quot;, line 201, in prompt\n    return await request_model(\n           ^^^^^^^^^^^^^^^^^^^^\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/acp/utils.py&quot;, line 97, in request_model\n    response = await conn.send_request(method, serialize_params(params))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File &quot;/home/alfredo/repo/ml-zoomcamp-2026-homeworks/.venv/lib/python3.12/site-packages/acp/connection.py&quot;, line 144, in send_request\n    return await future\n           ^^^^^^^^^^^^\nConnectionError: Connection closed\n</pre>\n</details>",
+      "id": "259cd504-6ba0-493b-bbb5-44c24d9fdcd5",
+      "time": 1793039825.7296553,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": []
+    },
+    {
+      "id": "cb74ac42-d8c1-4c16-a8cd-c69115cfe3b0",
+      "body": "NameError: name 'expected' is not defined\n",
+      "time": 1793039861.4657266,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "627184ee-eeb2-44e3-98f5-0e1302c20fe0",
+        "to_persona": null,
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "id": "abf2ec3a-f59c-46d1-8332-e54f688e7f4a",
+      "body": "NameError: name 'expected' is not defined\n",
+      "time": 1793039866.1041017,
+      "sender": "74bf03683dcb4fefadc4d2e719d23653",
+      "type": "msg",
+      "raw_time": false,
+      "metadata": {
+        "web_client_id": "627184ee-eeb2-44e3-98f5-0e1302c20fe0",
+        "to_persona": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+        "model": {
+          "id": null,
+          "settings": {}
+        },
+        "settings": {}
+      }
+    },
+    {
+      "body": "",
+      "id": "c7fbe5a6-9c1f-4dae-8fbd-8c60c862fc40",
+      "time": 1793039868.5184193,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01AhKZVi69m5cMQxJrpouktw",
+            "title": "ToolSearch",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "query": "select:mcp__Jupyter_MCP_Server__read_notebook_cells,mcp__Jupyter_MCP_Server__insert_cell,mcp__Jupyter_MCP_Server__run_cell,mcp__Jupyter_MCP_Server__get_cell_id_from_index",
+              "max_results": 4
+            },
+            "raw_output": [
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__read_notebook_cells"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__insert_cell"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__run_cell"
+              },
+              {
+                "type": "tool_reference",
+                "tool_name": "mcp__Jupyter_MCP_Server__get_cell_id_from_index"
+              }
+            ]
+          },
+          {
+            "tool_call_id": "toolu_017geobggZHSur5WQxKX4peS",
+            "title": "mcp__Jupyter_MCP_Server__read_notebook_cells",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "notebook_path": "05-deployment/solutions/homework.ipynb"
+            },
+            "raw_output": "{\"result\":[{\"cellType\":\"markdown\",\"source\":\"# ML Zoomcamp 2026 \u2014 Homework 5: Deployment\\n\",\"execution_count\":null,\"cell_id\":\"c00\"},{\"cellType\":\"code\",\"source\":\"import hashlib\\nimport json\\nimport os\\nimport subprocess\\nimport time\\nfrom urllib.request import Request, urlopen\\n\\n# use this folder's uv project, not the repo-level .venv\\nos.environ.pop('VIRTUAL_ENV', None)\\n\\n!uv sync --locked -q\\n!uv run python smoke_test.py\",\"execution_count\":1,\"cell_id\":\"c01\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"{'conversion_probability': 0.769799, 'conversion': True}\\n\"}]},{\"cellType\":\"markdown\",\"source\":\"## Q1. uv version\",\"execution_count\":null,\"cell_id\":\"c04\"},{\"cellType\":\"code\",\"source\":\"!uv --version\",\"execution_count\":2,\"cell_id\":\"c05\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"uv 0.12.5 (x86_64-unknown-linux-gnu)\\n\"}]},{\"cellType\":\"markdown\",\"source\":\"## Q2. Locked Scikit-Learn version\",\"execution_count\":null,\"cell_id\":\"c06\"},{\"cellType\":\"code\",\"source\":\"!grep scikit-learn pyproject.toml\\n!grep -A1 '^name = \\\"scikit-learn\\\"' uv.lock\",\"execution_count\":3,\"cell_id\":\"c07\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"    \\\"scikit-learn==1.7.2\\\",\\nname = \\\"scikit-learn\\\"\\nversion = \\\"1.7.2\\\"\\n\"}]},{\"cellType\":\"markdown\",\"source\":\"## Q3. Load the model with pickle\",\"execution_count\":null,\"cell_id\":\"c08\"},{\"cellType\":\"code\",\"source\":\"%%writefile q3_load_model.py\\nimport pickle\\n\\nfrom model import normalize_record\\n\\nlead = {\\n    \\\"lead_source\\\": \\\"paid_ads\\\",\\n    \\\"industry\\\": \\\"technology\\\",\\n    \\\"employment_status\\\": \\\"employed\\\",\\n    \\\"location\\\": \\\"north_america\\\",\\n    \\\"number_of_courses_viewed\\\": 2,\\n    \\\"annual_income\\\": 79276.0,\\n    \\\"interaction_count\\\": 4,\\n    \\\"lead_score\\\": 0.41,\\n}\\n\\nwith open(\\\"pipeline.bin\\\", \\\"rb\\\") as f_in:\\n    pipeline = pickle.load(f_in)\\n\\nprobability = pipeline.predict_proba([normalize_record(lead)])[0, 1]\\nprint(round(float(probability), 3))\",\"execution_count\":4,\"cell_id\":\"c09\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"Overwriting q3_load_model.py\\n\"}]},{\"cellType\":\"code\",\"source\":\"!uv run python q3_load_model.py\",\"execution_count\":5,\"cell_id\":\"c10\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"0.533\\n\"}]},{\"cellType\":\"markdown\",\"source\":\"## Q4. Serve the model with FastAPI\\nStart `predict:app` with uvicorn in the background, then POST the second lead.\",\"execution_count\":null,\"cell_id\":\"c11\"},{\"cellType\":\"code\",\"source\":\"URL = 'http://localhost:9696'\\nclient = {\\n    'lead_source': 'organic_search',\\n    'industry': 'technology',\\n    'employment_status': 'employed',\\n    'location': 'europe',\\n    'number_of_courses_viewed': 4,\\n    'annual_income': 80304.0,\\n    'interaction_count': 7,\\n    'lead_score': 0.74,\\n}\\n\\ndef wait_for_health(url, timeout=60):\\n    deadline = time.time() + timeout\\n    while time.time() < deadline:\\n        try:\\n            with urlopen(f'{url}/health') as response:\\n                return json.load(response)\\n        except OSError:\\n            time.sleep(0.5)\\n    raise TimeoutError(f'{url} did not become healthy')\\n\\ndef predict(url, lead):\\n    request = Request(f'{url}/predict', data=json.dumps(lead).encode(),\\n                      headers={'Content-Type': 'application/json'}, method='POST')\\n    with urlopen(request) as response:\\n        return json.load(response)\",\"execution_count\":6,\"cell_id\":\"c12\",\"language\":\"python\"},{\"cellType\":\"code\",\"source\":\"server = subprocess.Popen(['uv', 'run', 'uvicorn', 'predict:app', '--host', '0.0.0.0', '--port', '9696'],\\n                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\\ntry:\\n    print(wait_for_health(URL))\\n    result = predict(URL, client)\\nfinally:\\n    server.terminate()\\n    server.wait()\\n\\nresult, round(result['conversion_probability'], 3)\",\"execution_count\":7,\"cell_id\":\"c13\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"{'status': 'ok', 'model_sha256': '1646bbdcd38d4f044da6b630c5b332c93a314245a8c21929011c42de51f629f1', 'feature_defaults_sha256': '1694f842b908fac9f53c0cc19be6d91f934befc63af23cc32fefafde69acd0cd'}\\n\"},{\"output_type\":\"execute_result\",\"text\":\"({'conversion_probability': 0.769799, 'conversion': True}, 0.77)\",\"image\":null}]},{\"cellType\":\"markdown\",\"source\":\"## Q5. Python base image\\nThe tag declared in the checked-in `Dockerfile`:\",\"execution_count\":null,\"cell_id\":\"c14\"},{\"cellType\":\"code\",\"source\":\"!head -1 Dockerfile\",\"execution_count\":8,\"cell_id\":\"c15\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"FROM python:3.11.15-slim-bookworm@sha256:d29f48a31a8b408ed19272ca1e7b10ebae13b240a27e862d3d4217c528e2e0c3\\n\"}]},{\"cellType\":\"markdown\",\"source\":\"## Q6. Run the container\\n\\nBuild the image and run it in the background, then send the same request as Q4.\\nIt serves the same frozen artifact, so the answer must match Q4.\",\"execution_count\":null,\"cell_id\":\"c16\"},{\"cellType\":\"code\",\"source\":\"!docker build -q -t zoomcamp-model:2026-hw5 .\\n!docker run -d --rm --name hw5 -p 9696:9696 zoomcamp-model:2026-hw5\",\"execution_count\":9,\"cell_id\":\"c17\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"stream\",\"text\":\"sha256:ec6844b0913f66aeb08b8beab49f37e971fd532bb7d430cb3477bdf61da0710e\\n271c86c7f11382d5cb1961ef26055705a1c11207858f85140f16fe1323b8c8df\\n\"}]},{\"cellType\":\"code\",\"source\":\"try:\\n    health = wait_for_health(URL)\\n    assert health['status'] == 'ok' and health['model_sha256'] == expected\\n    print(health)\\n    result = predict(URL, client)\\nfinally:\\n    subprocess.run(['docker', 'stop', 'hw5'], capture_output=True)\\n\\nresult, round(result['conversion_probability'], 3)\",\"execution_count\":10,\"cell_id\":\"c18\",\"language\":\"python\",\"outputs\":[{\"output_type\":\"error\",\"text\":\"NameError: name 'expected' is not defined\\n\\u001b[31m---------------------------------------------------------------------------\\u001b[39m\\n\\u001b[31mNameError\\u001b[39m                                 Traceback (most recent call last)\\n\\u001b[36mCell\\u001b[39m\\u001b[36m \\u001b[39m\\u001b[32mIn[10]\\u001b[39m\\u001b[32m, line 7\\u001b[39m\\n\\u001b[32m      3\\u001b[39m     \\u001b[38;5;28;01massert\\u001b[39;00m health[\\u001b[33m'status'\\u001b[39m] == \\u001b[33m'ok'\\u001b[39m \\u001b[38;5;28;01mand\\u001b[39;00m health[\\u001b[33m'model_sha256'\\u001b[39m] == expected\\n\\u001b[32m      4\\u001b[39m     print(health)\\n\\u001b[32m      5\\u001b[39m     result = predict(URL, client)\\n\\u001b[32m      6\\u001b[39m \\u001b[38;5;28;01mfinally\\u001b[39;00m:\\n\\u001b[32m----> \\u001b[39m\\u001b[32m7\\u001b[39m     subprocess.run([\\u001b[33m'docker'\\u001b[39m, \\u001b[33m'stop'\\u001b[39m, \\u001b[33m'hw5'\\u001b[39m], capture_output=\\u001b[38;5;28;01mTrue\\u001b[39;00m)\\n\\u001b[32m      8\\u001b[39m \\n\\u001b[32m      9\\u001b[39m result, round(result[\\u001b[33m'conversion_probability'\\u001b[39m], \\u001b[32m3\\u001b[39m)\\n\\n\\u001b[31mNameError\\u001b[39m: name 'expected' is not defined\"}]},{\"cellType\":\"code\",\"source\":\"\",\"execution_count\":null,\"cell_id\":\"60657c47-2055-4fb2-b18e-5560f62949e3\",\"language\":\"python\"}]}",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for Read Notebook Cells commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          }
+        ]
+      }
+    },
+    {
+      "body": "The cells I tried to add last time didn't make it in (the cell IDs jump from `c01` to `c04`, so `c02`/`c03` are the missing checksum cells). Adding them now:",
+      "id": "3fb2b735-cf82-47c8-9ebc-9396afab5a99",
+      "time": 1793039883.392184,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "body": "",
+      "id": "fbc38fd2-0fdc-40ed-b198-0dc13631025f",
+      "time": 1793039883.3967626,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_018qRW6KqAwtCoGteB8EomGx",
+            "title": "mcp__Jupyter_MCP_Server__insert_cell",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "cell_type": "markdown",
+              "content": "Check the artifact checksum before unpickling it.",
+              "insert_index": 2
+            },
+            "raw_output": "{\"requestId\":\"8e8a874f-23d1-4f94-ad14-e40ccdf82b6a\",\"success\":true,\"result\":{\"success\":true,\"message\":\"markdown cell added successfully\",\"cellId\":\"5b5e1187-681e-4bd3-ba82-e3c0b4048f7f\",\"content\":\"Check the artifact checksum before unpickling it.\",\"cellType\":\"markdown\",\"position\":\"above\"}}",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for Insert Cell commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          },
+          {
+            "tool_call_id": "toolu_01KaHvaZbFxXF89zvV1Uh71P",
+            "title": "mcp__Jupyter_MCP_Server__insert_cell",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "cell_type": "code",
+              "content": "with open('model_metadata.json') as f_in:\n    expected = json.load(f_in)['model_sha256']\n\nwith open('pipeline.bin', 'rb') as f_in:\n    actual = hashlib.sha256(f_in.read()).hexdigest()\n\nassert actual == expected, f'pipeline.bin checksum mismatch: {actual}'\nexpected",
+              "insert_index": 3
+            },
+            "raw_output": "{\"requestId\":\"73b02b76-733d-4bdd-8253-03289c3950ca\",\"success\":true,\"result\":{\"success\":true,\"message\":\"code cell added successfully\",\"cellId\":\"7cec79fd-33b4-4001-a40b-742ccb7e6d66\",\"content\":\"with open('model_metadata.json') as f_in:\\n    expected = json.load(f_in)['model_sha256']\\n\\nwith open('pipeline.bin', 'rb') as f_in:\\n    actual = hashlib.sha256(f_in.read()).hexdigest()\\n\\nassert actual == expected, f'pipeline.bin checksum mismatch: {actual}'\\nexpected\",\"cellType\":\"code\",\"position\":\"above\"}}"
+          }
+        ]
+      }
+    },
+    {
+      "body": "Now running the new checksum cell, then the Q6 cells again. The failed run's `finally` block already stopped the container, so it has to be started again.",
+      "id": "dd876f58-9df1-4aef-99de-5ae4d2ea512e",
+      "time": 1793040013.2362149,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    },
+    {
+      "body": "",
+      "id": "44918595-0a06-4e98-a2b0-87b49ec04e44",
+      "time": 1793040013.2400792,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "metadata": {
+        "tool_calls": [
+          {
+            "tool_call_id": "toolu_01EToHHoA85tA7JLLcUq9DAu",
+            "title": "mcp__Jupyter_MCP_Server__run_cell",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "cell_id": "7cec79fd-33b4-4001-a40b-742ccb7e6d66",
+              "file_path": "05-deployment/solutions/homework.ipynb"
+            },
+            "raw_output": "{\"requestId\":\"daeea707-d9e0-44e2-8ec8-2f527074cd23\",\"success\":true,\"result\":{\"success\":true,\"status\":\"ok\",\"message\":\"Cell with ID '7cec79fd-33b4-4001-a40b-742ccb7e6d66' executed successfully\",\"cellId\":\"7cec79fd-33b4-4001-a40b-742ccb7e6d66\",\"cellType\":\"code\",\"executionCount\":11,\"outputs\":[{\"execution_count\":11,\"output_type\":\"execute_result\",\"data\":{\"text/plain\":\"'1646bbdcd38d4f044da6b630c5b332c93a314245a8c21929011c42de51f629f1'\"},\"metadata\":{}}],\"hasOutput\":true}}",
+            "permission_options": [
+              {
+                "option_id": "allow-once",
+                "name": "Yes",
+                "kind": "allow_once"
+              },
+              {
+                "option_id": "allow-with-updates",
+                "name": "Yes, and don't ask again for Run Cell commands",
+                "kind": "allow_always"
+              },
+              {
+                "option_id": "reject",
+                "name": "No",
+                "kind": "reject_once"
+              }
+            ],
+            "permission_status": "resolved",
+            "selected_option_id": "allow-with-updates",
+            "session_id": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+          },
+          {
+            "tool_call_id": "toolu_01QkkQDXpf8fjyN3PFjMZhJe",
+            "title": "mcp__Jupyter_MCP_Server__run_cell",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "cell_id": "c17",
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "timeout": 10
+            },
+            "raw_output": "{\"requestId\":\"1c09d6e9-ac3c-4297-8801-7e8575592fc7\",\"success\":true,\"result\":{\"success\":true,\"status\":\"ok\",\"message\":\"Cell with ID 'c17' executed successfully\",\"cellId\":\"c17\",\"cellType\":\"code\",\"executionCount\":12,\"outputs\":[{\"name\":\"stdout\",\"output_type\":\"stream\",\"text\":\"sha256:ec6844b0913f66aeb08b8beab49f37e971fd532bb7d430cb3477bdf61da0710e\\ne2b07c0bd59d4fee03a489578b369183b618d2efaca3e58612b9e8c880ea5f47\\n\"}],\"hasOutput\":true}}"
+          },
+          {
+            "tool_call_id": "toolu_01BWQmwTRCNH5PYwJoaxvYqA",
+            "title": "mcp__Jupyter_MCP_Server__run_cell",
+            "kind": "other",
+            "status": "completed",
+            "raw_input": {
+              "cell_id": "c18",
+              "file_path": "05-deployment/solutions/homework.ipynb",
+              "timeout": 10
+            },
+            "raw_output": "{\"requestId\":\"876d68ed-9093-4775-838c-7e5f91f95c9e\",\"success\":true,\"result\":{\"success\":true,\"status\":\"ok\",\"message\":\"Cell with ID 'c18' executed successfully\",\"cellId\":\"c18\",\"cellType\":\"code\",\"executionCount\":13,\"outputs\":[{\"name\":\"stdout\",\"output_type\":\"stream\",\"text\":\"{'status': 'ok', 'model_sha256': '1646bbdcd38d4f044da6b630c5b332c93a314245a8c21929011c42de51f629f1', 'feature_defaults_sha256': '1694f842b908fac9f53c0cc19be6d91f934befc63af23cc32fefafde69acd0cd'}\\n\"},{\"execution_count\":13,\"output_type\":\"execute_result\",\"data\":{\"text/plain\":\"({'conversion_probability': 0.769799, 'conversion': True}, 0.77)\"},\"metadata\":{}}],\"hasOutput\":true}}"
+          }
+        ]
+      }
+    },
+    {
+      "body": "The error is fixed and Q6 now runs: the container returns **0.77** (`conversion_probability` 0.769799), the same as Q4.\n\n**What was wrong:** the Q6 cell checks the container's model checksum against a variable called `expected`, but the cell that defined it had been deleted. That's why `hashlib` was imported but never used. My first attempt to add it back last time didn't take effect, so it was still missing.\n\n**What I changed:** I added two cells right after the setup cell:\n- A markdown cell: \"Check the artifact checksum before unpickling it.\"\n- A code cell that reads `model_sha256` from `model_metadata.json` into `expected` and checks it against the actual SHA256 of `pipeline.bin`. They match (`1646bbdc\u2026`).\n\nI then ran the checksum cell and both Q6 cells. The container reported the same model checksum and returned the same prediction as your local server in Q4. The cell's `finally` step stops the container afterwards, so nothing is left running.\n\nYour answers so far:\n\n| Q | Answer |\n|---|---|\n| Q1 | uv 0.12.5 |\n| Q2 | scikit-learn 1.7.2 |\n| Q3 | 0.533 |\n| Q4 | 0.77 |\n| Q5 | `python:3.11.15-slim-bookworm` |\n| Q6 | 0.77 |\n\nSave the notebook in Jupyter (Ctrl+S) to keep the new cells and outputs. Running the whole notebook from the top with Restart & Run All is also worth doing, so all the outputs come from one clean run.",
+      "id": "c03e638e-2420-468d-82ea-29cc8c185643",
+      "time": 1793040268.7451782,
+      "sender": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "type": "msg",
+      "mentions": [],
+      "raw_time": false
+    }
+  ],
+  "users": {
+    "74bf03683dcb4fefadc4d2e719d23653": {
+      "username": "74bf03683dcb4fefadc4d2e719d23653",
+      "name": "Anonymous Eirene",
+      "display_name": "Anonymous Eirene",
+      "initials": "AE",
+      "avatar_url": null,
+      "color": null,
+      "bot": false
+    },
+    "hidden::jupyter_ai_system": {
+      "username": "hidden::jupyter_ai_system",
+      "name": "System",
+      "display_name": "System",
+      "initials": null,
+      "avatar_url": null,
+      "color": null,
+      "bot": true
+    },
+    "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona": {
+      "username": "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona",
+      "name": "Claude",
+      "display_name": "Claude",
+      "initials": null,
+      "avatar_url": "/api/ai/avatars/jupyter-ai-personas%3A%3Ajupyter_ai_acp_client%3A%3AClaudeAcpPersona",
+      "color": null,
+      "bot": true
+    },
+    "jupyter-ai-personas::jupyter_ai_acp_client::CopilotAcpPersona": {
+      "username": "jupyter-ai-personas::jupyter_ai_acp_client::CopilotAcpPersona",
+      "name": "Copilot",
+      "display_name": "Copilot",
+      "initials": null,
+      "avatar_url": "/api/ai/avatars/jupyter-ai-personas%3A%3Ajupyter_ai_acp_client%3A%3ACopilotAcpPersona",
+      "color": null,
+      "bot": true
+    },
+    "jupyter-ai-personas::jupyter_ai_acp_client::OpenCodeAcpPersona": {
+      "username": "jupyter-ai-personas::jupyter_ai_acp_client::OpenCodeAcpPersona",
+      "name": "OpenCode",
+      "display_name": "OpenCode",
+      "initials": null,
+      "avatar_url": "/api/ai/avatars/jupyter-ai-personas%3A%3Ajupyter_ai_acp_client%3A%3AOpenCodeAcpPersona",
+      "color": null,
+      "bot": true
+    }
+  },
+  "attachments": {},
+  "metadata": {
+    "id": "32d44480dd4544759da38268b42e8d11",
+    "acp_session_ids": {
+      "jupyter-ai-personas::jupyter_ai_acp_client::ClaudeAcpPersona": "e2840e53-7f09-488d-9549-c7b2ac99f160"
+    }
+  }
+}
